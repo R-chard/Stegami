@@ -1,39 +1,36 @@
-import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import java.awt.Image;
+
 public class AppMain extends JFrame{
-    private final Dimension APP_SIZE = new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width / 2,
-			Toolkit.getDefaultToolkit().getScreenSize().height / 2);
+    private final Dimension APP_SIZE = new Dimension(650,600);
 
     public AppMain(){
         setTitle("Image Hider");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         JPanel mainPanel = new JPanel();
-        mainPanel.add(createImagePanel(),BorderLayout.NORTH);
+        mainPanel.setLayout(new GridLayout(2,1));
+        mainPanel.add(createImagePanel());
         mainPanel.setBackground(Color.WHITE);
         mainPanel.setVisible(true);
-        setLayout(new BorderLayout());
+        
 
         JPanel bottomPanel = new JPanel();
         bottomPanel.add(createEncodePageButton(bottomPanel));
         bottomPanel.add(createDecodePageButton(bottomPanel));
 
-        mainPanel.add(bottomPanel,BorderLayout.SOUTH);
+        mainPanel.add(bottomPanel);
 
         getContentPane().add(mainPanel);
     
@@ -76,15 +73,11 @@ public class AppMain extends JFrame{
     private JPanel createImagePanel(){
         JPanel imagePanel = new JPanel();
         imagePanel.setBackground(Color.WHITE);
-        imagePanel.setPreferredSize(new Dimension(500, 400));
-        try{
-            BufferedImage myPicture = ImageIO.read(new File("asset/icon.png"));
-            JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-            imagePanel.add(picLabel);
-        } catch(IOException e){
-            System.out.println(e.getMessage());
-        }
+        //imagePanel.setPreferredSize(new Dimension(100, 100));
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon("asset/icon.png").getImage().getScaledInstance(200, 200,Image.SCALE_DEFAULT));
+        JLabel iconLabel = new JLabel();
+        iconLabel.setIcon(imageIcon);
+        imagePanel.add(iconLabel);
         return imagePanel;
-        
     }
 }
