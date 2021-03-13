@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
 import javax.swing.JFileChooser;
 import javax.imageio.ImageIO;
@@ -45,19 +44,11 @@ public class EncodePanel extends JPanel{
 				int response = chooser.showOpenDialog(null);
 				if (response == JFileChooser.APPROVE_OPTION) {
 					try {
-
-						// Retrieving data saved in file through input streams before data is
-						// unmarshalled to an object
 						File file = chooser.getSelectedFile();
-						//FileInputStream fileInputStream = new FileInputStream(file);
+						
                         
                         container = ImageIO.read(file);
-                        // secret = ImageIO.read(new File("secret.jpg"));
                         
-                        // is.to_grayscale(secret);
-
-                        // is.encode(container, secret);
-                        //fileInputStream.close();
 
 					} catch (Exception err) {
 						// Exception is displayed as a JOptionPane to the user
@@ -113,8 +104,9 @@ public class EncodePanel extends JPanel{
 				try{
 					System.out.println("encode clicked");
 					is.encode(container, secret);
-					// TODO go to preview encoded img page
+					
 					ResultPanel.getInstance().updateImage(container);
+					System.out.println(container);
 					AppMain.getInstance().toPanel(PanelName.PREVIEW);
 
 				} catch (Exception err) {

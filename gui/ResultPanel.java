@@ -29,7 +29,20 @@ public class ResultPanel extends JPanel{
     }
 
     public void updateImage(BufferedImage resultImg) {
+        System.out.println("update img method");
+        System.out.println(resultImg);
         this.resultImg = resultImg;
+    }
+
+    public void saveImage(String fileName) {
+        // save
+        File outputfile = new File(fileName);
+        try{
+            ImageIO.write(resultImg, "png", outputfile);
+        } catch (IOException ioe) {
+            ioe.getStackTrace();
+        }
+        
     }
 
     private JButton createSaveButton() {
@@ -48,8 +61,8 @@ public class ResultPanel extends JPanel{
 					if (chooser.showSaveDialog(null) == chooser.APPROVE_OPTION) {
 						fileName = chooser.getSelectedFile().getAbsolutePath(); //TODO extension
 		
-                        File outputfile = new File(fileName);
-                        ImageIO.write(resultImg, "png", outputfile);
+                        System.out.println(resultImg);
+                        ResultPanel.getInstance().saveImage(fileName);
 					}
 					System.out.println("saved");
 

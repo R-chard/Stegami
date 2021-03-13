@@ -15,21 +15,23 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Utils.ImageSteganography;
 
+@SuppressWarnings("serial")
 public class DecodePanel extends JPanel{
 
     private final String SUPPORTED_FILE_TYPE = "png";
-	private BufferedImage encodedImg, secret;
+	private BufferedImage container, secret;
 	ImageSteganography is;
 
     public DecodePanel(){
 		is = new ImageSteganography();
         setBackground(Color.BLUE);
+		add(createContainerButton());
         add(createDecodeButton());
-		add(createSaveButton());
+		
     }
 
-    private JButton createDecodeButton(){
-        JButton normButton = new JButton("Upload encoded image");
+	private JButton createContainerButton(){
+        JButton normButton = new JButton("Upload Container Image");
         normButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser();
@@ -45,8 +47,15 @@ public class DecodePanel extends JPanel{
 						// Retrieving data saved in file through input streams before data is
 						// unmarshalled to an object
 						File file = chooser.getSelectedFile();
-						encodedImg = ImageIO.read(file);
-						secret = is.decode(encodedImg);
+						//FileInputStream fileInputStream = new FileInputStream(file);
+                        
+                        container = ImageIO.read(file);
+                        // secret = ImageIO.read(new File("secret.jpg"));
+                        
+                        // is.to_grayscale(secret);
+
+                        // is.encode(container, secret);
+                        //fileInputStream.close();
 
 					} catch (Exception err) {
 						// Exception is displayed as a JOptionPane to the user
@@ -54,41 +63,27 @@ public class DecodePanel extends JPanel{
 								JOptionPane.PLAIN_MESSAGE);
 						err.printStackTrace();
 					}
+
 				}
 			}
         });
         return normButton;
     }
 
-	private JButton createSaveButton() { 
-        JButton saveButton = new JButton("Save Image");
-        saveButton.addActionListener(new ActionListener(){
+    private JButton createDecodeButton(){
+        JButton decodeButton = new JButton("Decode");
+        decodeButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-				try {
-
-					JFileChooser chooser = new JFileChooser();
-					chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-					chooser.setCurrentDirectory(new File("."));
-
-					String fileName;
-
-					// Manually creating the full path of the file
-					if (chooser.showSaveDialog(null) == chooser.APPROVE_OPTION) {
-						fileName = chooser.getSelectedFile().getAbsolutePath(); 
-                        
-                        File outputfile = new File(fileName);
-                        ImageIO.write(secret, "png", outputfile);
-					}
-
+				try{
+					secret = is.decode(container);
+					ResultPanel.getInstance().updateImage(secret);
+					AppMain.getInstance().toPanel(PanelName.PREVIEW);
 				} catch (Exception err) {
 					err.printStackTrace();
 				}
-
 			}
         });
-        //File file = chooser.getSelectedFile();
-
-        
-        return saveButton;
+        return decodeButton;
     }
+
 }
