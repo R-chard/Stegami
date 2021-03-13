@@ -18,6 +18,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Image;
 import Utils.ImageSteganography;
 
+@SuppressWarnings("serial")
 public class DecodePanel extends JPanel{
     private static DecodePanel instance = null;
 
@@ -31,6 +32,7 @@ public class DecodePanel extends JPanel{
         previewPanel = new PreviewPanel(); 
         add(previewPanel,BorderLayout.CENTER);
         add(createBottomPanel(),BorderLayout.SOUTH);
+		//add(createPrevButton());
     }
 
     public static DecodePanel getInstance() {
@@ -57,7 +59,7 @@ public class DecodePanel extends JPanel{
     }
 
     private JButton createDecodeButton(){
-        JButton saveButton = new JButton("Save Image");
+        JButton saveButton = new JButton("Decode");
         saveButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 if(selectedImg == null){
@@ -83,30 +85,33 @@ public class DecodePanel extends JPanel{
         JButton saveButton = new JButton("Save Image");
         saveButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-				try {
+				try{
+					secret = is.decode(container);
+					ResultPanel.getInstance().updateImage(secret);
+					AppMain.getInstance().toPanel(PanelName.PREVIEW);
+				} catch (Exception err) {
+					err.printStackTrace();
+				}
+			}
+        });
+        return decodeButton;
+    } */
 
-					JFileChooser chooser = new JFileChooser();
-					chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-					chooser.setCurrentDirectory(new File("."));
-
-					String fileName;
-
-					// Manually creating the full path of the file
-					if (chooser.showSaveDialog(null) == chooser.APPROVE_OPTION) {
-						fileName = chooser.getSelectedFile().getAbsolutePath(); 
-                        
-                        File outputfile = new File(fileName);
-                        ImageIO.write(secret, "png", outputfile);
-					}
+	private JButton createPrevButton() {
+        
+        JButton prevButton = new JButton("Prev");
+        prevButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+				try{
+					AppMain.getInstance().toPanel(PanelName.MAIN);
 
 				} catch (Exception err) {
 					err.printStackTrace();
 				}
-
 			}
         });
         //File file = chooser.getSelectedFile();
         
-        return saveButton;
-    } */
+        return prevButton;
+    } 
 }

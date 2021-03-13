@@ -27,7 +27,9 @@ public class EncodePanel extends JPanel{
         setBackground(Color.CYAN);
         add(createSecretButton());
         add(createContainerButton());
+		add(createPrevButton());
 		add(createEncodeButton(this));
+		
     }
 
     private JButton createContainerButton(){
@@ -43,19 +45,11 @@ public class EncodePanel extends JPanel{
 				int response = chooser.showOpenDialog(null);
 				if (response == JFileChooser.APPROVE_OPTION) {
 					try {
-
-						// Retrieving data saved in file through input streams before data is
-						// unmarshalled to an object
 						File file = chooser.getSelectedFile();
-						//FileInputStream fileInputStream = new FileInputStream(file);
+						
                         
                         container = ImageIO.read(file);
-                        // secret = ImageIO.read(new File("secret.jpg"));
                         
-                        // is.to_grayscale(secret);
-
-                        // is.encode(container, secret);
-                        //fileInputStream.close();
 
 					} catch (Exception err) {
 						// Exception is displayed as a JOptionPane to the user
@@ -111,8 +105,9 @@ public class EncodePanel extends JPanel{
 				try{
 					System.out.println("encode clicked");
 					is.encode(container, secret);
-					// TODO go to preview encoded img page
+					
 					ResultPanel.getInstance().updateImage(container);
+					System.out.println(container);
 					AppMain.getInstance().toPanel(PanelName.PREVIEW);
 
 				} catch (Exception err) {
@@ -126,7 +121,24 @@ public class EncodePanel extends JPanel{
         return encodeButton;
     }
 
-    
+	private JButton createPrevButton() {
+        
+        JButton prevButton = new JButton("Prev");
+        prevButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+				try{
+					AppMain.getInstance().toPanel(PanelName.MAIN);
+
+				} catch (Exception err) {
+					err.printStackTrace();
+				}
+			}
+        });
+        //File file = chooser.getSelectedFile();
+
+        
+        return prevButton;
+    }
 }
 
 
