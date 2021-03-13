@@ -1,14 +1,19 @@
+package gui;
+
 import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.io.File;
+import java.io.IOException;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Image;
+import javax.imageio.ImageIO;
 
 // Reusable preview class
 public class PreviewPanel extends JPanel {
@@ -18,27 +23,20 @@ public class PreviewPanel extends JPanel {
     private String selectedImagePath = DEFAULT_IMAGE_PATH; 
 
     public PreviewPanel(){
-        
-        JButton button = createButton(DEFAULT_IMAGE_PATH,this);
-        add(button);
+        try{
+            BufferedImage selectedImg = ImageIO.read(new File(DEFAULT_IMAGE_PATH));
+            JButton button = createButton(selectedImg);
+            add(button);
+        } catch(IOException ioe){};
         
     };
-
-    public String getSelectedImage(){
-        if (selectedImagePath.equals(DEFAULT_IMAGE_PATH)){
-            JOptionPane.showMessageDialog(null, "Please select an image", "Error",
-				JOptionPane.PLAIN_MESSAGE);
-            return null;
-        }
-        return selectedImagePath;
-    }
-
+    
     public void setSelectedImage(String filePath){
         selectedImagePath = filePath;
     }
 
-    private JButton createButton(String imagePath,PreviewPanel panel){
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(200, 200,Image.SCALE_DEFAULT));
+    private JButton createButton(BufferedImage image){
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon(image).getImage().getScaledInstance(200, 200,Image.SCALE_DEFAULT));
         JButton button = new JButton(imageIcon);
         button.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
@@ -53,9 +51,7 @@ public class PreviewPanel extends JPanel {
 					try {
 
 						File file = chooser.getSelectedFile();
-                        String path = file.getPath();
-                        
-                        refreshButton(path,panel);
+                        DecodePanel.getInstance().getImage(file.getPath());
 
 					} catch (Exception err) {
 						// Exception is displayed as a JOptionPane to the user
@@ -77,12 +73,10 @@ public class PreviewPanel extends JPanel {
         return button;
     }
 
-    void refreshButton(String imagePath,PreviewPanel panel){
-        this.removeAll();
-        System.out.println(imagePath);
-        panel.setText("asc");
-        this.add(createButton(imagePath,panel));
-        this.validate();
+    public void updateImage(BufferedImage image){
+        removeAll();
+        add(createButton(image));
+        validate();
     }
     
 }

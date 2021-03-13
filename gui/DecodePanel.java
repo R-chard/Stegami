@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-
+import java.io.IOException;
 import java.awt.BorderLayout;
 
 import javax.swing.JFileChooser;
@@ -19,15 +19,32 @@ import java.awt.Image;
 import Utils.ImageSteganography;
 
 public class DecodePanel extends JPanel{
+    private static DecodePanel instance = null;
 
-    private final String SUPPORTED_FILE_TYPE = "png";
-	private BufferedImage encodedImg, secret;
+	private BufferedImage encodedImg, secret, selectedImg;
+    private PreviewPanel previewPanel;
 	ImageSteganography is;
 
     public DecodePanel(){
+        is = new ImageSteganography();
         setLayout(new BorderLayout());
-        add(createDefaultImgPanel(),BorderLayout.CENTER);
+        previewPanel = new PreviewPanel(); 
+        add(previewPanel,BorderLayout.CENTER);
         add(createBottomPanel(),BorderLayout.SOUTH);
+    }
+
+    public static DecodePanel getInstance() {
+        if (instance == null)
+            instance = new DecodePanel();
+        return instance;
+    }
+    
+    public void getImage(String path) {
+        try {
+            selectedImg = ImageIO.read(new File(path));
+            previewPanel.updateImage(selectedImg);
+        }
+        catch (IOException ioe) {}
     }
 
     private JPanel createBottomPanel(){
@@ -35,53 +52,34 @@ public class DecodePanel extends JPanel{
         JButton decodeButton = createDecodeButton();
         
         bottomPanel.add(decodeButton);
+        
         return bottomPanel;
     }
 
-    private JPanel createDefaultImgPanel(){
-        JPanel defaultImgPanel = new JPanel();
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon("asset/default.png").getImage().getScaledInstance(200, 200,Image.SCALE_DEFAULT));
-        JButton button = new JButton(imageIcon);
-
-        button.addActionListener(new ActionListener(){
+    private JButton createDecodeButton(){
+        JButton saveButton = new JButton("Save Image");
+        saveButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-				JFileChooser chooser = new JFileChooser();
-				chooser.setFileFilter(new FileNameExtensionFilter("." + SUPPORTED_FILE_TYPE, SUPPORTED_FILE_TYPE));
-				chooser.setCurrentDirectory(new File("."));
-				chooser.setDialogTitle("Open File");
-				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-				int response = chooser.showOpenDialog(null);
-				if (response == JFileChooser.APPROVE_OPTION) {
-					try {
-
-						// Retrieving data saved in file through input streams before data is
-						// unmarshalled to an object
-						File file = chooser.getSelectedFile();
-						encodedImg = ImageIO.read(file);
-						secret = is.decode(encodedImg);
-
-					} catch (Exception err) {
-						// Exception is displayed as a JOptionPane to the user
-						JOptionPane.showMessageDialog(button, "An error occured while loading file", "Error",
-								JOptionPane.PLAIN_MESSAGE);
-						err.printStackTrace();
-					}
+                if(selectedImg == null){
+                    JOptionPane.showMessageDialog(null, "Please select an image", "Error",
+				JOptionPane.PLAIN_MESSAGE);
+                }
+                try{
+					secret = is.decode(selectedImg);
+					ResultPanel.getInstance().updateImage(secret);
+					AppMain.getInstance().toPanel(PanelName.PREVIEW);
+				} catch (Exception err) {
+					err.printStackTrace();
 				}
+
 			}
         });
-
-        button.setOpaque(false);
-        button.setContentAreaFilled(false);
-        button.setBorderPainted(false);
-        button.setFocusPainted(false);
-
-        defaultImgPanel.add(button);
-
-        return defaultImgPanel;
+        //File file = chooser.getSelectedFile();
+        
+        return saveButton;
     }
 
-	private JButton createDecodeButton() { 
+	/*private JButton createDecodeButton() { 
         JButton saveButton = new JButton("Save Image");
         saveButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
@@ -110,5 +108,5 @@ public class DecodePanel extends JPanel{
         //File file = chooser.getSelectedFile();
         
         return saveButton;
-    }
+    } */
 }
