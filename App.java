@@ -10,10 +10,12 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Stack;
@@ -33,13 +35,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import Utils.*;
+
 public class App extends JFrame{
+    BufferedImage container, secret;
+    ImageSteganography is = new ImageSteganography();
     private final Dimension APP_SIZE = new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width / 2,
 			Toolkit.getDefaultToolkit().getScreenSize().height / 2);
 
     private final String SUPPORTED_FILE_TYPE = "png";
 
     public App(){
+        
         setTitle("Image Hider");
         
         JPanel mainPanel = new JPanel();
@@ -48,6 +55,7 @@ public class App extends JFrame{
 
         mainPanel.add(createSecretButton());
         mainPanel.add(createContainerButton());
+        mainPanel.add(createSaveButton());
         
 
         getContentPane().add(mainPanel);
@@ -76,9 +84,15 @@ public class App extends JFrame{
 						// Retrieving data saved in file through input streams before data is
 						// unmarshalled to an object
 						File file = chooser.getSelectedFile();
-						FileInputStream fileInputStream = new FileInputStream(file);
+						//FileInputStream fileInputStream = new FileInputStream(file);
+                        
+                        container = ImageIO.read(file);
+                        // secret = ImageIO.read(new File("secret.jpg"));
+                        
+                        // is.to_grayscale(secret);
 
-                        fileInputStream.close();
+                        // is.encode(container, secret);
+                        //fileInputStream.close();
 
 					} catch (Exception err) {
 						// Exception is displayed as a JOptionPane to the user
@@ -111,9 +125,9 @@ public class App extends JFrame{
 						// Retrieving data saved in file through input streams before data is
 						// unmarshalled to an object
 						File file = chooser.getSelectedFile();
-						FileInputStream fileInputStream = new FileInputStream(file);
-
-                        fileInputStream.close();
+						
+                        
+                        secret = ImageIO.read(file);
 
 					} catch (Exception err) {
 						// Exception is displayed as a JOptionPane to the user
@@ -126,6 +140,41 @@ public class App extends JFrame{
 			}
         });
         return normButton;
+    }
+
+    private JButton createSaveButton() {
+        
+        JButton saveButton = new JButton("Save Image");
+        saveButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+				try {
+
+					JFileChooser chooser = new JFileChooser();
+					chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+					chooser.setCurrentDirectory(new File("."));
+
+					String fileName;
+
+					// Manually creating the full path of the file
+					if (chooser.showSaveDialog(null) == chooser.APPROVE_OPTION) {
+						fileName = chooser.getSelectedFile().getAbsolutePath(); //TODO extension
+                        is.encode(container, secret);
+                        File outputfile = new File("encoded.png");
+                        ImageIO.write(container, "png", outputfile);
+					}
+					
+					System.out.println("saved");
+
+				} catch (Exception err) {
+					err.printStackTrace();
+				}
+
+			}
+        });
+        //File file = chooser.getSelectedFile();
+
+        
+        return saveButton;
     }
 
     private void addImagePanel(){
