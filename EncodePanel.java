@@ -105,8 +105,8 @@ public class EncodePanel extends JPanel{
 
 	private JButton createEncodeButton() {
         
-        JButton saveButton = new JButton("Encode");
-        saveButton.addActionListener(new ActionListener(){
+        JButton encodeButton = new JButton("Encode");
+        encodeButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
 				try{
 					is.encode(container, secret);
@@ -119,43 +119,10 @@ public class EncodePanel extends JPanel{
         //File file = chooser.getSelectedFile();
 
         
-        return saveButton;
+        return encodeButton;
     }
 
-	// TODO move this to preview page
-    private JButton createSaveButton() {
-        
-        JButton saveButton = new JButton("Save Image");
-        saveButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-				try {
-
-					JFileChooser chooser = new JFileChooser();
-					chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-					chooser.setCurrentDirectory(new File("."));
-
-					String fileName;
-
-					// Manually creating the full path of the file
-					if (chooser.showSaveDialog(null) == chooser.APPROVE_OPTION) {
-						fileName = chooser.getSelectedFile().getAbsolutePath(); //TODO extension
-		
-                        File outputfile = new File(fileName);
-                        ImageIO.write(container, "png", outputfile);
-					}
-					System.out.println("saved");
-
-				} catch (Exception err) {
-					err.printStackTrace();
-				}
-
-			}
-        });
-        //File file = chooser.getSelectedFile();
-
-        
-        return saveButton;
-    }
+    
 }
 
 
