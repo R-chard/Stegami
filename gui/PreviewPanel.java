@@ -20,9 +20,11 @@ public class PreviewPanel extends JPanel {
 
     private final String SUPPORTED_FILE_TYPE = "png";
     private final String DEFAULT_IMAGE_PATH = "asset/default.png";
-    private String selectedImagePath = DEFAULT_IMAGE_PATH; 
+    private int identifier;
 
-    public PreviewPanel(){
+    public PreviewPanel(int identifier){
+        this.identifier = identifier;
+
         try{
             BufferedImage selectedImg = ImageIO.read(new File(DEFAULT_IMAGE_PATH));
             JButton button = createButton(selectedImg);
@@ -30,10 +32,6 @@ public class PreviewPanel extends JPanel {
         } catch(IOException ioe){};
         
     };
-    
-    public void setSelectedImage(String filePath){
-        selectedImagePath = filePath;
-    }
 
     private JButton createButton(BufferedImage image){
         ImageIcon imageIcon = new ImageIcon(new ImageIcon(image).getImage().getScaledInstance(200, 200,Image.SCALE_DEFAULT));
@@ -51,7 +49,14 @@ public class PreviewPanel extends JPanel {
 					try {
 
 						File file = chooser.getSelectedFile();
-                        DecodePanel.getInstance().getImage(file.getPath());
+                        if(identifier == 0){
+                            DecodePanel.getInstance().getImage(file.getPath());
+                        } else if (identifier == 1){
+                            EncodePanel.getInstance().getContainerImage(file.getPath());
+                        } else if (identifier == 2){
+                            EncodePanel.getInstance().getSecretImage(file.getPath());
+                        }
+                        
 
 					} catch (Exception err) {
 						// Exception is displayed as a JOptionPane to the user

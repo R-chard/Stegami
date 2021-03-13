@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -8,31 +7,26 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.BorderLayout;
 
-import javax.swing.JFileChooser;
-import javax.swing.ImageIcon;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.Image;
 import Utils.ImageSteganography;
 
 @SuppressWarnings("serial")
 public class DecodePanel extends JPanel{
     private static DecodePanel instance = null;
 
-	private BufferedImage encodedImg, secret, selectedImg;
+	private BufferedImage secret, selectedImg;
     private PreviewPanel previewPanel;
 	ImageSteganography is;
 
     public DecodePanel(){
         is = new ImageSteganography();
         setLayout(new BorderLayout());
-        previewPanel = new PreviewPanel(); 
+        previewPanel = new PreviewPanel(0); 
         add(previewPanel,BorderLayout.CENTER);
         add(createBottomPanel(),BorderLayout.SOUTH);
-		//add(createPrevButton());
     }
 
     public static DecodePanel getInstance() {
@@ -52,8 +46,10 @@ public class DecodePanel extends JPanel{
     private JPanel createBottomPanel(){
         JPanel bottomPanel = new JPanel();
         JButton decodeButton = createDecodeButton();
-        
+        JButton prevButton = createPrevButton();
+
         bottomPanel.add(decodeButton);
+        bottomPanel.add(prevButton);
         
         return bottomPanel;
     }
@@ -64,7 +60,8 @@ public class DecodePanel extends JPanel{
             public void actionPerformed(ActionEvent e) {
                 if(selectedImg == null){
                     JOptionPane.showMessageDialog(null, "Please select an image", "Error",
-				JOptionPane.PLAIN_MESSAGE);
+				    JOptionPane.PLAIN_MESSAGE);
+                    return;
                 }
                 try{
 					secret = is.decode(selectedImg);
@@ -76,26 +73,9 @@ public class DecodePanel extends JPanel{
 
 			}
         });
-        //File file = chooser.getSelectedFile();
         
         return saveButton;
     }
-
-	/*private JButton createDecodeButton() { 
-        JButton saveButton = new JButton("Save Image");
-        saveButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-				try{
-					secret = is.decode(container);
-					ResultPanel.getInstance().updateImage(secret);
-					AppMain.getInstance().toPanel(PanelName.PREVIEW);
-				} catch (Exception err) {
-					err.printStackTrace();
-				}
-			}
-        });
-        return decodeButton;
-    } */
 
 	private JButton createPrevButton() {
         
@@ -110,7 +90,6 @@ public class DecodePanel extends JPanel{
 				}
 			}
         });
-        //File file = chooser.getSelectedFile();
         
         return prevButton;
     } 
