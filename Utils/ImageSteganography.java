@@ -15,7 +15,7 @@ public class ImageSteganography {
     private int rgb_to_grayscale(Color c) {
         return  (int)(c.getRed() * 0.299) + 
                 (int)(c.getGreen() * 0.587) + 
-                (int)(c.getBlue() *0.114);
+                (int)(c.getBlue() * 0.114);
     }
 
     private int[] partition_grayscale(int g) {
@@ -42,28 +42,42 @@ public class ImageSteganography {
      * Convert a colored image to grayscale image
      * @param coloredImage to be convert to grayscale
      */
-    public void to_grayscale(BufferedImage coloredImage) {
+    private void to_grayscale(BufferedImage coloredImage) {
         int w = coloredImage.getWidth();
         int h = coloredImage.getHeight();
         for (int i = 0; i < w; i++) {
             for (int j = 0; j < h; j++) {
                 int c = rgb_to_grayscale(new Color(coloredImage.getRGB(i, j)));
-
-                Color newColor = new Color(c, c, c);
                 
-                coloredImage.setRGB(i, j, newColor.getRGB());
+                coloredImage.setRGB(i, j, new Color(c, c, c).getRGB());
             }
         }
     }
 
-    public void encode(BufferedImage container, BufferedImage secret) {
-        int w = Math.min(container.getWidth(), secret.getWidth());
-        int h = Math.min(container.getHeight(), secret.getHeight());
+    public void encode(BufferedImage container, BufferedImage secret) throws SteganographyException {
+        
+        
+        int container_w = container.getWidth();
+        int container_h = container.getHeight();
+        int secret_w = secret.getWidth();
+        int secret_h = secret.getHeight();
 
-        for (int i = 0; i < w; i++) {
-            for (int j = 0; j < h; j++) {
+        if (secret_w > container_w || secret_h > container_h) {
+            throw new SteganographyException("Container image must larger than Secret image");
+        }
+        
+        this.to_grayscale(secret);
+
+        for (int i = 0; i < container_w; i++) {
+            for (int j = 0; j < container_h; j++) {
+                int[] g;
+                
+                if (i < secret_w && j < secret_h)
+                    g = partition_grayscale(new Color(secret.getRGB(i, j)).getRed());
+                else
+                    g = new int[]{0, 0, 0, 0};
+
                 Color c = new Color(container.getRGB(i, j), true);
-                int[] g = partition_grayscale(new Color(secret.getRGB(i, j)).getRed());
                 Color newColor = new Color(
                     encode_pixel(c.getRed(), g[0]),
                     encode_pixel(c.getGreen(), g[1]),
@@ -84,13 +98,10 @@ public class ImageSteganography {
 
         for (int i = 0; i < w; i++) {
             for (int j = 0; j < h; j++) {
-                Color c = new Color(container.getRGB(i, j), true);
-                int g = get_grayscale(c);
+                int g = get_grayscale(new Color(container.getRGB(i, j), true));
                 secret.setRGB(i, j, new Color(g, g, g).getRGB());
             }
         }
         return secret;
     }
-
-
 }
