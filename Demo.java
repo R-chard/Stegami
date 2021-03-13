@@ -1,6 +1,5 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import Utils.ImageSteganography;
@@ -12,23 +11,23 @@ public class Demo {
         ImageSteganography is = new ImageSteganography();
         
         try {
-            // container = ImageIO.read(new File("container.jpg"));
-            // secret = ImageIO.read(new File("secret.jpg"));
+            container = ImageIO.read(new File("data/container.png"));
+            secret = ImageIO.read(new File("data/secret.png"));
             
             // is.to_grayscale(secret);
 
-            // is.encode(container, secret);
+            is.encode(container, secret);
             
-            // File outputfile = new File("saved.png");
-            // ImageIO.write(container, "png", outputfile);
+            File outputfile = new File("data/encoded.png");
+            ImageIO.write(container, "png", outputfile);
 
-            container = ImageIO.read(new File("test.png"));
+            container = ImageIO.read(new File("data/encoded.png"));
             secret = is.decode(container);
-            File outputfile = new File("new.png");
+            outputfile = new File("decoded.png");
             ImageIO.write(secret, "png", outputfile);
 
         }
-        catch (IOException ioe) {
+        catch (Exception e) {
 
         }
     }
