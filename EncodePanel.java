@@ -2,19 +2,8 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Stack;
-
-import java.awt.event.*;
 
 import javax.swing.JFileChooser;
 import javax.imageio.ImageIO;
@@ -131,7 +120,7 @@ public class EncodePanel extends JPanel{
 					if (chooser.showSaveDialog(null) == chooser.APPROVE_OPTION) {
 						fileName = chooser.getSelectedFile().getAbsolutePath(); //TODO extension
                         is.encode(container, secret);
-                        File outputfile = new File("encoded.png");
+                        File outputfile = new File(fileName);
                         ImageIO.write(container, "png", outputfile);
 					}
 					

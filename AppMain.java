@@ -78,7 +78,7 @@ public class AppMain extends JFrame{
         imagePanel.setBackground(Color.WHITE);
         imagePanel.setPreferredSize(new Dimension(500, 400));
         try{
-            BufferedImage myPicture = ImageIO.read(new File("icon.png"));
+            BufferedImage myPicture = ImageIO.read(new File("asset/icon.png"));
             JLabel picLabel = new JLabel(new ImageIcon(myPicture));
             imagePanel.add(picLabel);
         } catch(IOException e){
