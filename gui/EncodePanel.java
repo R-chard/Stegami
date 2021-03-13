@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -100,7 +99,7 @@ public class EncodePanel extends JPanel{
             public void actionPerformed(ActionEvent e) {
 				try{
 					// TODO remove container, secret
-					EncodePanel.getInstance().removeImage();
+					// EncodePanel.getInstance().removeImage();
 					AppMain.getInstance().toPanel(PanelName.MAIN);
 
 				} catch (Exception err) {
