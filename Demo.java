@@ -22,11 +22,10 @@ public class Demo {
             // File outputfile = new File("saved.png");
             // ImageIO.write(container, "png", outputfile);
 
-            container = ImageIO.read(new File("saved.png"));
+            container = ImageIO.read(new File("test.png"));
             secret = is.decode(container);
             File outputfile = new File("new.png");
             ImageIO.write(secret, "png", outputfile);
-
 
         }
         catch (IOException ioe) {
