@@ -5,7 +5,7 @@ import javax.imageio.ImageIO;
 
 import Utils.ImageSteganography;
 
-public class Test {
+public class Demo {
     public static void main(String[] args) {
         BufferedImage container = null;
         BufferedImage secret = null;
