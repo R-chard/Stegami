@@ -12,10 +12,10 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.Image;
 import javax.imageio.ImageIO;
 
 // Reusable preview class
+@SuppressWarnings("serial")
 public class PreviewPanel extends JPanel {
 
     private final String SUPPORTED_FILE_TYPE = "png";

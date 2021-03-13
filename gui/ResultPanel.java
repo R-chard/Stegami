@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -10,11 +9,9 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
-
+@SuppressWarnings("serial")
 public class ResultPanel extends JPanel{
     private static ResultPanel instance = null;
 
@@ -33,6 +30,10 @@ public class ResultPanel extends JPanel{
         System.out.println("update img method");
         System.out.println(resultImg);
         this.resultImg = resultImg;
+    }
+
+    public void removeImage() {
+        this.resultImg = null;
     }
 
     public void saveImage(String fileName) {
@@ -59,7 +60,7 @@ public class ResultPanel extends JPanel{
 					String fileName;
 
 					// Manually creating the full path of the file
-					if (chooser.showSaveDialog(null) == chooser.APPROVE_OPTION) {
+					if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 						fileName = chooser.getSelectedFile().getAbsolutePath(); //TODO extension
 		
                         System.out.println(resultImg);
@@ -85,7 +86,10 @@ public class ResultPanel extends JPanel{
         prevButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
 				try{
+                    // TODO remove result img + encode img
+                    ResultPanel.getInstance().removeImage();
 					AppMain.getInstance().toPanel(PanelName.MAIN);
+                    
 
 				} catch (Exception err) {
 					err.printStackTrace();

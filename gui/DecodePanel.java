@@ -79,6 +79,22 @@ public class DecodePanel extends JPanel{
         return saveButton;
     }
 
+	/*private JButton createDecodeButton() { 
+        JButton saveButton = new JButton("Save Image");
+        saveButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+				try{
+					secret = is.decode(container);
+					ResultPanel.getInstance().updateImage(secret);
+					AppMain.getInstance().toPanel(PanelName.PREVIEW);
+				} catch (Exception err) {
+					err.printStackTrace();
+				}
+			}
+        });
+        return decodeButton;
+    }*/
+
 	private JButton createPrevButton() {
         
         JButton prevButton = new JButton("Prev");

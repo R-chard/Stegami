@@ -25,6 +25,12 @@ public class EncodePanel extends JPanel{
     private static final int HEIGHT = 400;
 	ImageSteganography is;
 
+    public static EncodePanel getInstance() {
+        if (instance == null)
+            instance = new EncodePanel();
+        return instance;
+    }
+
     public EncodePanel(){
 		is = new ImageSteganography();
         this.setLayout(null);
@@ -38,12 +44,6 @@ public class EncodePanel extends JPanel{
 		add(containPreviewPanel);
 		add(secretPreviewPanel);
 		add(bottomPanel);
-    }
-
-	public static EncodePanel getInstance() {
-        if (instance == null)
-            instance = new EncodePanel();
-        return instance;
     }
 
 	public void getContainerImage(String path) {
@@ -109,6 +109,8 @@ public class EncodePanel extends JPanel{
         prevButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
 				try{
+					// TODO remove container, secret
+					// EncodePanel.getInstance().removeImage();
 					AppMain.getInstance().toPanel(PanelName.MAIN);
 
 				} catch (Exception err) {
@@ -116,7 +118,6 @@ public class EncodePanel extends JPanel{
 				}
 			}
         });
-        
         return prevButton;
     }
 }
