@@ -27,7 +27,7 @@ public class DecodePanel extends JPanel{
         setBackground(Color.BLUE);
 		add(createContainerButton());
         add(createDecodeButton());
-		
+		add(createPrevButton());
     }
 
 	private JButton createContainerButton(){
@@ -86,4 +86,22 @@ public class DecodePanel extends JPanel{
         return decodeButton;
     }
 
+	private JButton createPrevButton() {
+        
+        JButton prevButton = new JButton("Prev");
+        prevButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+				try{
+					AppMain.getInstance().toPanel(PanelName.MAIN);
+
+				} catch (Exception err) {
+					err.printStackTrace();
+				}
+			}
+        });
+        //File file = chooser.getSelectedFile();
+
+        
+        return prevButton;
+    }
 }

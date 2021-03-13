@@ -28,7 +28,9 @@ public class EncodePanel extends JPanel{
         setBackground(Color.CYAN);
         add(createSecretButton());
         add(createContainerButton());
+		add(createPrevButton());
 		add(createEncodeButton(this));
+		
     }
 
     private JButton createContainerButton(){
@@ -120,7 +122,24 @@ public class EncodePanel extends JPanel{
         return encodeButton;
     }
 
-    
+	private JButton createPrevButton() {
+        
+        JButton prevButton = new JButton("Prev");
+        prevButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+				try{
+					AppMain.getInstance().toPanel(PanelName.MAIN);
+
+				} catch (Exception err) {
+					err.printStackTrace();
+				}
+			}
+        });
+        //File file = chooser.getSelectedFile();
+
+        
+        return prevButton;
+    }
 }
 
 

@@ -25,6 +25,7 @@ public class ResultPanel extends JPanel{
     }
     BufferedImage resultImg;
     public ResultPanel(){
+        add(createPrevButton());
         add(createSaveButton());
     }
 
@@ -76,5 +77,24 @@ public class ResultPanel extends JPanel{
 
         
         return saveButton;
+    }
+
+    private JButton createPrevButton() {
+        
+        JButton prevButton = new JButton("Prev");
+        prevButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+				try{
+					AppMain.getInstance().toPanel(PanelName.MAIN);
+
+				} catch (Exception err) {
+					err.printStackTrace();
+				}
+			}
+        });
+        //File file = chooser.getSelectedFile();
+
+        
+        return prevButton;
     }
 }
