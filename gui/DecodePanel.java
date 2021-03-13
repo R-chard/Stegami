@@ -17,17 +17,16 @@ import Utils.ImageSteganography;
 public class DecodePanel extends JPanel{
     private static DecodePanel instance = null;
 
-	private BufferedImage encodedImg, secret, selectedImg;
+	private BufferedImage secret, selectedImg;
     private PreviewPanel previewPanel;
 	ImageSteganography is;
 
     public DecodePanel(){
         is = new ImageSteganography();
         setLayout(new BorderLayout());
-        previewPanel = new PreviewPanel(); 
+        previewPanel = new PreviewPanel(0); 
         add(previewPanel,BorderLayout.CENTER);
         add(createBottomPanel(),BorderLayout.SOUTH);
-		//add(createPrevButton());
     }
 
     public static DecodePanel getInstance() {
@@ -47,8 +46,10 @@ public class DecodePanel extends JPanel{
     private JPanel createBottomPanel(){
         JPanel bottomPanel = new JPanel();
         JButton decodeButton = createDecodeButton();
-        
+        JButton prevButton = createPrevButton();
+
         bottomPanel.add(decodeButton);
+        bottomPanel.add(prevButton);
         
         return bottomPanel;
     }
@@ -59,7 +60,8 @@ public class DecodePanel extends JPanel{
             public void actionPerformed(ActionEvent e) {
                 if(selectedImg == null){
                     JOptionPane.showMessageDialog(null, "Please select an image", "Error",
-				JOptionPane.PLAIN_MESSAGE);
+				    JOptionPane.PLAIN_MESSAGE);
+                    return;
                 }
                 try{
 					secret = is.decode(selectedImg);
@@ -71,7 +73,6 @@ public class DecodePanel extends JPanel{
 
 			}
         });
-        //File file = chooser.getSelectedFile();
         
         return saveButton;
     }
@@ -105,6 +106,7 @@ public class DecodePanel extends JPanel{
 				}
 			}
         });
+        
         return prevButton;
     } 
 }
