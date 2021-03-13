@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.CardLayout;
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,7 +20,6 @@ public class AppMain extends JFrame {
     }
 
     public AppMain() {
-        super("Hi");
 
         contentPanel = new JPanel();
         card = new CardLayout();

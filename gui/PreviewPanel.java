@@ -34,7 +34,7 @@ public class PreviewPanel extends JPanel {
     };
 
     private JButton createButton(BufferedImage image){
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon(image).getImage().getScaledInstance(200, 200,Image.SCALE_DEFAULT));
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon(image).getImage());
         JButton button = new JButton(imageIcon);
         button.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
