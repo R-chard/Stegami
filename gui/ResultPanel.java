@@ -35,6 +35,10 @@ public class ResultPanel extends JPanel{
         this.resultImg = resultImg;
     }
 
+    public void removeImage() {
+        this.resultImg = null;
+    }
+
     public void saveImage(String fileName) {
         // save
         File outputfile = new File(fileName);
@@ -85,7 +89,10 @@ public class ResultPanel extends JPanel{
         prevButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
 				try{
+                    // TODO remove result img + encode img
+                    ResultPanel.getInstance().removeImage();
 					AppMain.getInstance().toPanel(PanelName.MAIN);
+                    
 
 				} catch (Exception err) {
 					err.printStackTrace();

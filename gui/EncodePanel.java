@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,16 +21,31 @@ public class EncodePanel extends JPanel{
 
     private final String SUPPORTED_FILE_TYPE = "png";
 	private BufferedImage container,secret;
+	private PreviewPanel previewPanel;
 	ImageSteganography is;
+
+	private static EncodePanel instance = null;
+
+    public static EncodePanel getInstance() {
+        if (instance == null)
+            instance = new EncodePanel();
+        return instance;
+    }
 
     public EncodePanel(){
 		is = new ImageSteganography();
         setBackground(Color.CYAN);
+		previewPanel = new PreviewPanel(); 
+        add(previewPanel,BorderLayout.CENTER);
         add(createSecretButton());
         add(createContainerButton());
 		add(createPrevButton());
 		add(createEncodeButton(this));
-		
+    }
+
+	public void removeImage() {
+        this.container = null;
+		this.secret = null;
     }
 
     private JButton createContainerButton(){
@@ -46,8 +62,6 @@ public class EncodePanel extends JPanel{
 				if (response == JFileChooser.APPROVE_OPTION) {
 					try {
 						File file = chooser.getSelectedFile();
-						
-                        
                         container = ImageIO.read(file);
                         
 
@@ -127,6 +141,8 @@ public class EncodePanel extends JPanel{
         prevButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
 				try{
+					// TODO remove container, secret
+					EncodePanel.getInstance().removeImage();
 					AppMain.getInstance().toPanel(PanelName.MAIN);
 
 				} catch (Exception err) {
@@ -134,7 +150,7 @@ public class EncodePanel extends JPanel{
 				}
 			}
         });
-        //File file = chooser.getSelectedFile();
+        
 
         
         return prevButton;

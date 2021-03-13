@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -8,14 +7,10 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.BorderLayout;
 
-import javax.swing.JFileChooser;
-import javax.swing.ImageIcon;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.Image;
 import Utils.ImageSteganography;
 
 @SuppressWarnings("serial")
@@ -95,7 +90,7 @@ public class DecodePanel extends JPanel{
 			}
         });
         return decodeButton;
-    } */
+    }*/
 
 	private JButton createPrevButton() {
         
@@ -110,8 +105,6 @@ public class DecodePanel extends JPanel{
 				}
 			}
         });
-        //File file = chooser.getSelectedFile();
-        
         return prevButton;
     } 
 }
