@@ -1,3 +1,5 @@
+package gui;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,9 +16,19 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 public class ResultPanel extends JPanel{
+    private static ResultPanel instance = null;
+
+    public static ResultPanel getInstance() {
+        if (instance == null)
+            instance = new ResultPanel();
+        return instance;
+    }
     BufferedImage resultImg;
-    public ResultPanel(BufferedImage resultImg){
+    public ResultPanel(){
         add(createSaveButton());
+    }
+
+    public void updateImage(BufferedImage resultImg) {
         this.resultImg = resultImg;
     }
 

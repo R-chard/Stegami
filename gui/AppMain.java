@@ -26,9 +26,9 @@ public class AppMain extends JFrame {
         contentPanel.setLayout(card);
 
         mainPanel = new MainPanel();
-        encodePanel = new JPanel();
-        decodePanel = new JPanel();
-        resultPanel = new JPanel();
+        encodePanel = new EncodePanel();
+        decodePanel = new DecodePanel();
+        resultPanel = new ResultPanel();
 
         contentPanel.add(PanelName.MAIN.getName(), mainPanel);
         contentPanel.add(PanelName.ENCODE.getName(), encodePanel);
