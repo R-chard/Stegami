@@ -53,7 +53,7 @@ public class MainPanel extends JPanel {
         encodeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AppMain.getInstance().toPanel("ENCODE");
+                AppMain.getInstance().toPanel(PanelName.ENCODE);
             }
         });
     }
