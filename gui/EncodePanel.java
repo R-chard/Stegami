@@ -29,7 +29,7 @@ public class EncodePanel extends JPanel{
         add(createSecretButton());
         add(createContainerButton());
 		add(createSaveButton());
-
+		add(createEncodeButton());
     }
 
     private JButton createContainerButton(){
@@ -105,40 +105,26 @@ public class EncodePanel extends JPanel{
         return normButton;
     }
 
-    private JButton createSaveButton() {
+	private JButton createEncodeButton() {
         
-        JButton saveButton = new JButton("Save Image");
-        saveButton.addActionListener(new ActionListener(){
+        JButton encodeButton = new JButton("Encode");
+        encodeButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-				try {
-
-					JFileChooser chooser = new JFileChooser();
-					chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-					chooser.setCurrentDirectory(new File("."));
-
-					String fileName;
-
-					// Manually creating the full path of the file
-					if (chooser.showSaveDialog(null) == chooser.APPROVE_OPTION) {
-						fileName = chooser.getSelectedFile().getAbsolutePath(); //TODO extension
-                        is.encode(container, secret);
-                        File outputfile = new File(fileName);
-                        ImageIO.write(container, "png", outputfile);
-					}
-					
-					System.out.println("saved");
-
+				try{
+					is.encode(container, secret);
+					// TODO go to preview encoded img page
 				} catch (Exception err) {
 					err.printStackTrace();
 				}
-
 			}
         });
         //File file = chooser.getSelectedFile();
 
         
-        return saveButton;
+        return encodeButton;
     }
+
+    
 }
 
 
