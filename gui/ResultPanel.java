@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -10,11 +9,9 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
-
+@SuppressWarnings("serial")
 public class ResultPanel extends JPanel{
     private static ResultPanel instance = null;
 
@@ -59,7 +56,7 @@ public class ResultPanel extends JPanel{
 					String fileName;
 
 					// Manually creating the full path of the file
-					if (chooser.showSaveDialog(null) == chooser.APPROVE_OPTION) {
+					if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 						fileName = chooser.getSelectedFile().getAbsolutePath(); //TODO extension
 		
                         System.out.println(resultImg);
