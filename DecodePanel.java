@@ -5,25 +5,38 @@ import java.io.File;
 import java.io.FileInputStream;
 
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import java.awt.Image;
 
 public class DecodePanel extends JPanel{
 
     private final String SUPPORTED_FILE_TYPE = "png";
 
     public DecodePanel(){
-        setBackground(Color.BLUE);
-        add(createDecodeButton());
-        //addImagePanel();
-
+        add(createDefaultImgPanel());
+        add(createBottomPanel());
     }
 
-    private JButton createDecodeButton(){
-        JButton normButton = new JButton("Decode");
-        normButton.addActionListener(new ActionListener(){
+    private JPanel createBottomPanel(){
+        JPanel bottomPanel = new JPanel();
+        JButton decodeButton = new JButton();
+
+        bottomPanel.add(decodeButton);
+        return bottomPanel;
+    }
+
+    private JPanel createDefaultImgPanel(){
+        JPanel defaultImgPanel = new JPanel();
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon("asset/default.png").getImage().getScaledInstance(200, 200,Image.SCALE_DEFAULT));
+        JButton button = new JButton(imageIcon);
+
+        button.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser();
 				chooser.setFileFilter(new FileNameExtensionFilter("." + SUPPORTED_FILE_TYPE, SUPPORTED_FILE_TYPE));
@@ -44,7 +57,7 @@ public class DecodePanel extends JPanel{
 
 					} catch (Exception err) {
 						// Exception is displayed as a JOptionPane to the user
-						JOptionPane.showMessageDialog(normButton, "An error occured while loading file", "Error",
+						JOptionPane.showMessageDialog(button, "An error occured while loading file", "Error",
 								JOptionPane.PLAIN_MESSAGE);
 						err.printStackTrace();
 					}
@@ -52,6 +65,14 @@ public class DecodePanel extends JPanel{
 				}
 			}
         });
-        return normButton;
+
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+
+        defaultImgPanel.add(button);
+
+        return defaultImgPanel;
     }
 }

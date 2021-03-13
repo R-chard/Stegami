@@ -24,7 +24,6 @@ public class AppMain extends JFrame{
         mainPanel.add(createImagePanel());
         mainPanel.setBackground(Color.WHITE);
         mainPanel.setVisible(true);
-        
 
         JPanel bottomPanel = new JPanel();
         bottomPanel.add(createEncodePageButton(bottomPanel));

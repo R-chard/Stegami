@@ -3,7 +3,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
 import javax.swing.JFileChooser;
 import javax.imageio.ImageIO;
@@ -20,14 +19,12 @@ public class EncodePanel extends JPanel{
 	private BufferedImage container,secret;
 	ImageSteganography is;
 
-
     public EncodePanel(){
 		is = new ImageSteganography();
         setBackground(Color.CYAN);
         add(createSecretButton());
         add(createContainerButton());
 		add(createSaveButton());
-
     }
 
     private JButton createContainerButton(){
