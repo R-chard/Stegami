@@ -9,9 +9,8 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class AppMain extends JFrame {
     private static AppMain instance = null;
-    private JPanel mainPanel, encodePanel, decodePanel;
+    private JPanel mainPanel, encodePanel, decodePanel, contentPanel, resultPanel;
     private CardLayout card;
-    private JPanel contentPanel;
 
     public static AppMain getInstance() {
         if (instance == null)
@@ -29,10 +28,12 @@ public class AppMain extends JFrame {
         mainPanel = new MainPanel();
         encodePanel = new JPanel();
         decodePanel = new JPanel();
+        resultPanel = new JPanel();
 
-        contentPanel.add("MAIN", mainPanel);
-        contentPanel.add("ENCODE", encodePanel);
-        contentPanel.add("DECODE", decodePanel);
+        contentPanel.add(PanelName.MAIN.getName(), mainPanel);
+        contentPanel.add(PanelName.ENCODE.getName(), encodePanel);
+        contentPanel.add(PanelName.DECODE.getName(), decodePanel);
+        contentPanel.add(PanelName.PREVIEW.getName(), resultPanel);
         
         this.setLayout(new BorderLayout());
         this.setLocationRelativeTo(null);
@@ -42,10 +43,10 @@ public class AppMain extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setVisible(true);
-        card.show(contentPanel, "MAIN");
+        card.show(contentPanel, PanelName.MAIN.getName());
     }
 
-    public void toPanel(String name) {
-        card.show(contentPanel, name);
+    public void toPanel(PanelName nxt) {
+        card.show(contentPanel, nxt.getName());
     }
 }
