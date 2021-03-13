@@ -45,7 +45,6 @@ public class App extends JFrame{
         JPanel mainPanel = new JPanel();
         mainPanel.setBackground(Color.WHITE);
         setLayout(new BorderLayout());
-        addDecodeButton();
 
         mainPanel.add(createSecretButton());
         mainPanel.add(createContainerButton());
@@ -127,10 +126,6 @@ public class App extends JFrame{
 			}
         });
         return normButton;
-    }
-
-    private void addDecodeButton(){
-        
     }
 
     private void addImagePanel(){
