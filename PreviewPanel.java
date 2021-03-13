@@ -1,0 +1,88 @@
+import javax.swing.JPanel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import java.io.File;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.Image;
+
+// Reusable preview class
+public class PreviewPanel extends JPanel {
+
+    private final String SUPPORTED_FILE_TYPE = "png";
+    private final String DEFAULT_IMAGE_PATH = "asset/default.png";
+    private String selectedImagePath = DEFAULT_IMAGE_PATH; 
+
+    public PreviewPanel(){
+        
+        JButton button = createButton(DEFAULT_IMAGE_PATH,this);
+        add(button);
+        
+    };
+
+    public String getSelectedImage(){
+        if (selectedImagePath.equals(DEFAULT_IMAGE_PATH)){
+            JOptionPane.showMessageDialog(null, "Please select an image", "Error",
+				JOptionPane.PLAIN_MESSAGE);
+            return null;
+        }
+        return selectedImagePath;
+    }
+
+    public void setSelectedImage(String filePath){
+        selectedImagePath = filePath;
+    }
+
+    private JButton createButton(String imagePath,PreviewPanel panel){
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(200, 200,Image.SCALE_DEFAULT));
+        JButton button = new JButton(imageIcon);
+        button.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				chooser.setFileFilter(new FileNameExtensionFilter("." + SUPPORTED_FILE_TYPE, SUPPORTED_FILE_TYPE));
+				chooser.setCurrentDirectory(new File("."));
+				chooser.setDialogTitle("Open File");
+				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+				int response = chooser.showOpenDialog(null);
+				if (response == JFileChooser.APPROVE_OPTION) {
+					try {
+
+						File file = chooser.getSelectedFile();
+                        String path = file.getPath();
+                        
+                        refreshButton(path,panel);
+
+					} catch (Exception err) {
+						// Exception is displayed as a JOptionPane to the user
+						JOptionPane.showMessageDialog(button, "An error occured while loading file", "Error",
+								JOptionPane.PLAIN_MESSAGE);
+						err.printStackTrace();
+					}
+
+				}
+			}
+
+        });
+        
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+
+        return button;
+    }
+
+    void refreshButton(String imagePath,PreviewPanel panel){
+        this.removeAll();
+        System.out.println(imagePath);
+        panel.setText("asc");
+        this.add(createButton(imagePath,panel));
+        this.validate();
+    }
+    
+}

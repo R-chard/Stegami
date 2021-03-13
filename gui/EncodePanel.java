@@ -1,3 +1,5 @@
+package gui;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +15,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Utils.ImageSteganography;
 
+@SuppressWarnings("serial")
 public class EncodePanel extends JPanel{
 
     private final String SUPPORTED_FILE_TYPE = "png";
@@ -24,8 +27,7 @@ public class EncodePanel extends JPanel{
         setBackground(Color.CYAN);
         add(createSecretButton());
         add(createContainerButton());
-		add(createSaveButton());
-		add(createEncodeButton());
+		add(createEncodeButton(this));
     }
 
     private JButton createContainerButton(){
@@ -101,14 +103,18 @@ public class EncodePanel extends JPanel{
         return normButton;
     }
 
-	private JButton createEncodeButton() {
+	private JButton createEncodeButton(JPanel panel) {
         
         JButton encodeButton = new JButton("Encode");
         encodeButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
 				try{
+					System.out.println("encode clicked");
 					is.encode(container, secret);
 					// TODO go to preview encoded img page
+					ResultPanel.getInstance().updateImage(container);
+					AppMain.getInstance().toPanel(PanelName.PREVIEW);
+
 				} catch (Exception err) {
 					err.printStackTrace();
 				}
