@@ -23,8 +23,6 @@ import Utils.ImageUtils;
 // Reusable preview class
 @SuppressWarnings("serial")
 public class PreviewPanel extends JPanel {
-
-    private final String SUPPORTED_FILE_TYPE = "png";
     private final String DEFAULT_IMAGE_PATH = "asset/default.png";
     private int identifier;
 
@@ -47,7 +45,7 @@ public class PreviewPanel extends JPanel {
         button.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser();
-				chooser.setFileFilter(new FileNameExtensionFilter("." + SUPPORTED_FILE_TYPE, SUPPORTED_FILE_TYPE));
+				chooser.setFileFilter(new FileNameExtensionFilter("Image Files", "png", "jpeg", "jpg"));
 				chooser.setCurrentDirectory(new File("."));
 				chooser.setDialogTitle("Open File");
 				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);

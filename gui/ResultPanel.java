@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Utils.ImageUtils;
 
@@ -92,6 +93,7 @@ public class ResultPanel extends JPanel{
             public void actionPerformed(ActionEvent e) {
 				try {
 					JFileChooser chooser = new JFileChooser();
+                    chooser.setFileFilter(new FileNameExtensionFilter(".png", "png"));
                     chooser.setSelectedFile(new File("result.png"));
 					chooser.setCurrentDirectory(new File("."));
 
