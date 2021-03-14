@@ -29,17 +29,19 @@ public class MainPanel extends JPanel {
         iconPanel = new JPanel();
         iconPanel.setBounds(200, 50, 200, 200);
         JLabel iconLabel = new JLabel();
-        iconLabel.setIcon(new ImageIcon(new ImageIcon("asset/icon.png").getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT)));
+        iconLabel.setIcon(new ImageIcon(new ImageIcon("asset/icon.png").getImage().getScaledInstance(200, 180, Image.SCALE_DEFAULT)));
         iconPanel.add(iconLabel);
         iconPanel.setBackground(Color.BLACK);
         this.add(iconPanel);
 
         encodeButton = new JButton("Encode");
+        encodeButton.setBackground(Color.WHITE);
         encodeButton.setBounds(200, 300, 100, 50);
         this.add(encodeButton);
 
         
         decodeButton = new JButton("Decode");
+        decodeButton.setBackground(Color.WHITE);
         decodeButton.setBounds(300, 300, 100, 50);
         this.add(decodeButton);
 

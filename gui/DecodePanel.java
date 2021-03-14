@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -24,6 +25,7 @@ public class DecodePanel extends JPanel{
     public DecodePanel(){
         is = new ImageSteganography();
         setLayout(new BorderLayout());
+        setBackground(Color.BLACK);
         previewPanel = new PreviewPanel(0); 
         add(previewPanel,BorderLayout.CENTER);
         add(createBottomPanel(),BorderLayout.SOUTH);
@@ -46,16 +48,16 @@ public class DecodePanel extends JPanel{
     private JPanel createBottomPanel(){
         JPanel bottomPanel = new JPanel();
         JButton decodeButton = createDecodeButton();
+        decodeButton.setBounds(0,0,75,100);
         JButton prevButton = createPrevButton();
-
-        bottomPanel.add(decodeButton);
         bottomPanel.add(prevButton);
-        
+        bottomPanel.add(decodeButton);
         return bottomPanel;
     }
 
     private JButton createDecodeButton(){
         JButton saveButton = new JButton("Decode");
+        saveButton.setBackground(Color.WHITE);
         saveButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 if(selectedImg == null){
@@ -77,9 +79,26 @@ public class DecodePanel extends JPanel{
         return saveButton;
     }
 
+	/*private JButton createDecodeButton() { 
+        JButton saveButton = new JButton("Save Image");
+        saveButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+				try{
+					secret = is.decode(container);
+					ResultPanel.getInstance().updateImage(secret);
+					AppMain.getInstance().toPanel(PanelName.PREVIEW);
+				} catch (Exception err) {
+					err.printStackTrace();
+				}
+			}
+        });
+        return decodeButton;
+    }*/
+
 	private JButton createPrevButton() {
         
         JButton prevButton = new JButton("Prev");
+        prevButton.setBackground(Color.WHITE);
         prevButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
 				try{

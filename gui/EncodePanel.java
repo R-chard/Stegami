@@ -1,9 +1,10 @@
 package gui;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.awt.BorderLayout;
 import java.io.File;
 import java.io.IOException;
 
@@ -20,22 +21,29 @@ public class EncodePanel extends JPanel{
 	private static EncodePanel instance = null;
 	private BufferedImage container, secret;
 	private PreviewPanel containPreviewPanel,secretPreviewPanel;
+	private static final int WIDTH = 600;
+    private static final int HEIGHT = 400;
 	ImageSteganography is;
 
-    public EncodePanel(){
-		is = new ImageSteganography();
-        setLayout(new BorderLayout());
-        containPreviewPanel = new PreviewPanel(1); 
-		secretPreviewPanel = new PreviewPanel(2);
-		add(containPreviewPanel,BorderLayout.WEST);
-		add(secretPreviewPanel,BorderLayout.EAST);
-		add(createBottomPanel());
-    }
-
-	public static EncodePanel getInstance() {
+    public static EncodePanel getInstance() {
         if (instance == null)
             instance = new EncodePanel();
         return instance;
+    }
+
+    public EncodePanel(){
+		is = new ImageSteganography();
+        this.setLayout(null);
+		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        containPreviewPanel = new PreviewPanel(1); 
+		containPreviewPanel.setBounds(0, 0, 300, 350);
+		secretPreviewPanel = new PreviewPanel(2);
+		secretPreviewPanel.setBounds(300, 0, 300, 350);
+		JPanel bottomPanel = createBottomPanel();
+		bottomPanel.setBounds(0,350,600,100);
+		add(containPreviewPanel);
+		add(secretPreviewPanel);
+		add(bottomPanel);
     }
 
 	public void getContainerImage(String path) {
@@ -58,12 +66,13 @@ public class EncodePanel extends JPanel{
 
 	private JPanel createBottomPanel(){
         JPanel bottomPanel = new JPanel();
+		//bottomPanel.setLayout(null);
         JButton decodeButton = createEncodeButton();
+		//decodeButton.setBounds(10,10,50,300);
         JButton prevButton = createPrevButton();
-
+		bottomPanel.add(prevButton);
         bottomPanel.add(decodeButton);
-        bottomPanel.add(prevButton);
-        
+		bottomPanel.setBackground(Color.BLACK);
         return bottomPanel;
     }
 
@@ -71,6 +80,7 @@ public class EncodePanel extends JPanel{
 	private JButton createEncodeButton() {
         
         JButton encodeButton = new JButton("Encode");
+		encodeButton.setBackground(Color.WHITE);
         encodeButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
 				if(container == null || secret == null){
@@ -95,9 +105,12 @@ public class EncodePanel extends JPanel{
 	private JButton createPrevButton() {
         
         JButton prevButton = new JButton("Prev");
+		prevButton.setBackground(Color.WHITE);
         prevButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
 				try{
+					// TODO remove container, secret
+					// EncodePanel.getInstance().removeImage();
 					AppMain.getInstance().toPanel(PanelName.MAIN);
 
 				} catch (Exception err) {
@@ -105,7 +118,6 @@ public class EncodePanel extends JPanel{
 				}
 			}
         });
-        
         return prevButton;
     }
 }

@@ -19,7 +19,6 @@ public class AppMain extends JFrame {
     }
 
     public AppMain() {
-        super("Hi");
 
         contentPanel = new JPanel();
         card = new CardLayout();
