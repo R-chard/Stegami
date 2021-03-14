@@ -9,9 +9,8 @@ Installing Stegami cannot be any easier! All you have to do is to download the "
 Alternatively, you can also choose to clone our open-sourced repository and run the program using the following commands from the root directory
 
 ```
-cd main
-javac Main.java
-java Main
+javac */*.java
+java main.Main
 ```
 
 ## How to use it 📑
@@ -48,4 +47,9 @@ Stegami uses the following frameworks:
 
 Stegami was built during the Stacshack 007 Hackathon ran by the University of St Andrews over a short period of 24 hours, despite having little experience with steganography. It was a really interesting idea and we are really proud of what we have accomplished within the time frame.
 
+## Executable files
 
+We also provide two executable file for two version of our application. The product required JDK.
+
+* **stegami.exe** - is our first products that will encode a grayscale image with very high quality and small changes to originals files.
+* **stegami-2.0.exe** - provide a way to encode a coloured image, however, the trade back is larger changes (+/- 16 in rgba values) in the original files.
