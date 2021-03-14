@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -13,15 +15,16 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import Utils.ImageUtils;
+
 @SuppressWarnings("serial")
 public class ResultPanel extends JPanel{
     BufferedImage resultImg;
-    private PreviewPanel previewPanel;
 
     private static ResultPanel instance = null;
-    private final String DEFAULT_IMAGE_PATH = "asset/default.png";
-    
-    private JPanel resultPanel;
+    private static final int WIDTH = 600;
+    private static final int HEIGHT = 400;
+    JPanel imagePanel;
 
     public static ResultPanel getInstance() {
         if (instance == null)
@@ -30,45 +33,43 @@ public class ResultPanel extends JPanel{
     }
     
     public ResultPanel(){
-        try{
-            resultImg = ImageIO.read(new File(DEFAULT_IMAGE_PATH));
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        add(createPrevButton());
-        add(createSaveButton());
-        resultPanel = new JPanel();
-        add(resultPanel);
+        this.setLayout(null);
+        
+        imagePanel = new JPanel();
+        imagePanel.setBounds(0,0,600,300);
+        setBackground(Color.BLACK);
+
+        add(imagePanel);
+        JPanel bottomPanel = createBottomPanel();
+        bottomPanel.setBounds(0,350,600,50);
+        add(bottomPanel);
     }
 
-    public void getImage(String path) {
-        try {
-            resultImg = ImageIO.read(new File(path));
-            System.out.println("result img" + resultImg);
-            previewPanel.updateImage(resultImg);
-            System.out.println("result img");
-            System.out.println(resultImg);
-        }
-        catch (IOException ioe) {}
+    private JPanel createBottomPanel(){
+        
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(null);
+        JButton prevButton = createPrevButton();
+		prevButton.setBounds(180,0,100,50);
+
+        JButton saveButton = createSaveButton();
+		saveButton.setBounds(320,0,100,50);
+
+        bottomPanel.add(prevButton);
+        bottomPanel.add(saveButton);
+        bottomPanel.setBackground(Color.BLACK);
+        return bottomPanel;
     }
 
     public void updateImage(BufferedImage resultImg) {
-        System.out.println("update img method");
-        System.out.println(resultImg);
         this.resultImg = resultImg;
-        JLabel resultLabel = new JLabel();
-        resultLabel.setIcon(new ImageIcon(resultImg));
-        resultPanel.removeAll();
-        resultPanel.add(resultLabel);
+        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        imagePanel.add(new JLabel(new ImageIcon(ImageUtils.resize(WIDTH, HEIGHT, resultImg))));
+        validate();
     }
 
     public void removeImage() {
-        try{
-            resultImg = ImageIO.read(new File("assest/default.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        resultImg = null;
     }
 
     public void saveImage(String fileName) {
@@ -85,6 +86,7 @@ public class ResultPanel extends JPanel{
     private JButton createSaveButton() {
         
         JButton saveButton = new JButton("Save Image");
+        saveButton.setBackground(Color.WHITE);
         saveButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
 				try {
@@ -92,13 +94,9 @@ public class ResultPanel extends JPanel{
                     chooser.setSelectedFile(new File("result.png"));
 					chooser.setCurrentDirectory(new File("."));
 
-
-                    
-					// Manually creating the full path of the file
 					if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 						String fileName = chooser.getSelectedFile().getAbsolutePath();
 		
-                        System.out.println(resultImg);
                         ResultPanel.getInstance().saveImage(fileName);
                         AppMain.getInstance().showDialog("Save image to " + fileName);
                         AppMain.getInstance().toPanel(PanelName.MAIN);
@@ -111,7 +109,6 @@ public class ResultPanel extends JPanel{
 
 			}
         });
-        //File file = chooser.getSelectedFile();
 
         
         return saveButton;
@@ -120,11 +117,12 @@ public class ResultPanel extends JPanel{
     private JButton createPrevButton() {
         
         JButton prevButton = new JButton("Prev");
+        prevButton.setBackground(Color.WHITE);
         prevButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
 				try{
                     // TODO remove result img + encode img
-                    ResultPanel.getInstance().removeImage();
+                    removeImage();
 					AppMain.getInstance().toPanel(PanelName.MAIN);
                     
 
@@ -133,7 +131,6 @@ public class ResultPanel extends JPanel{
 				}
 			}
         });
-        //File file = chooser.getSelectedFile();
 
         
         return prevButton;

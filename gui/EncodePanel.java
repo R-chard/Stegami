@@ -17,6 +17,7 @@ import javax.swing.JTextArea;
 import javax.swing.JOptionPane;
 
 import Utils.ImageSteganography;
+import Utils.SteganographyException;
 
 @SuppressWarnings("serial")
 public class EncodePanel extends JPanel{
@@ -120,7 +121,11 @@ public class EncodePanel extends JPanel{
 					ResultPanel.getInstance().updateImage(container);
 					AppMain.getInstance().toPanel(PanelName.PREVIEW);
 
-				} catch (Exception err) {
+				} catch(SteganographyException se){
+					JOptionPane.showMessageDialog(null, se.getMessage(), "Error",
+				    JOptionPane.PLAIN_MESSAGE);
+				}
+				catch (Exception err) {
 					err.printStackTrace();
 				}
 			}

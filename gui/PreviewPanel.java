@@ -2,6 +2,7 @@ package gui;
 
 import javax.swing.JPanel;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,6 +31,7 @@ public class PreviewPanel extends JPanel {
     public PreviewPanel(int identifier){
         this.identifier = identifier;
         this.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        this.setBackground(Color.BLACK);
 
         try{
             BufferedImage selectedImg = ImageIO.read(new File(DEFAULT_IMAGE_PATH));
@@ -61,8 +63,6 @@ public class PreviewPanel extends JPanel {
                             EncodePanel.getInstance().getContainerImage(file.getPath());
                         } else if (identifier == 2){
                             EncodePanel.getInstance().getSecretImage(file.getPath());
-                        } else if (identifier == 3){
-                            ResultPanel.getInstance().getImage(file.getPath());
                         }
                         
 
