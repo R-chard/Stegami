@@ -48,7 +48,6 @@ public class MainPanel extends JPanel {
         addListener();
     }
 
-    
     private void addListener() {
         encodeButton.addActionListener(new ActionListener() {
             @Override

@@ -66,10 +66,14 @@ public class EncodePanel extends JPanel{
 
 	private JPanel createBottomPanel(){
         JPanel bottomPanel = new JPanel();
-		//bottomPanel.setLayout(null);
+		bottomPanel.setLayout(null);
+
+		JButton prevButton = createPrevButton();
+		prevButton.setBounds(180,5,100,50);
+
         JButton decodeButton = createEncodeButton();
-		//decodeButton.setBounds(10,10,50,300);
-        JButton prevButton = createPrevButton();
+		decodeButton.setBounds(320,5,100,50);
+        
 		bottomPanel.add(prevButton);
         bottomPanel.add(decodeButton);
 		bottomPanel.setBackground(Color.BLACK);
