@@ -4,6 +4,7 @@ import java.awt.CardLayout;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
@@ -47,5 +48,9 @@ public class AppMain extends JFrame {
 
     public void toPanel(PanelName nxt) {
         card.show(contentPanel, nxt.getName());
+    }
+
+    public void showDialog(String msg) {
+        JOptionPane.showMessageDialog(null, msg);
     }
 }

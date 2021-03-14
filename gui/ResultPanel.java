@@ -5,8 +5,6 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.awt.BorderLayout;
-import java.awt.Image;
 
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -91,20 +89,22 @@ public class ResultPanel extends JPanel{
             public void actionPerformed(ActionEvent e) {
 				try {
 					JFileChooser chooser = new JFileChooser();
-					chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                    chooser.setSelectedFile(new File("result.png"));
 					chooser.setCurrentDirectory(new File("."));
 
-					String fileName;
 
+                    
 					// Manually creating the full path of the file
 					if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-						fileName = chooser.getSelectedFile().getAbsolutePath(); //TODO extension
+						String fileName = chooser.getSelectedFile().getAbsolutePath();
 		
                         System.out.println(resultImg);
                         ResultPanel.getInstance().saveImage(fileName);
-					}
-					System.out.println("saved");
-
+                        AppMain.getInstance().showDialog("Save image to " + fileName);
+                        AppMain.getInstance().toPanel(PanelName.MAIN);
+					} else {
+                        AppMain.getInstance().showDialog("Unable to save result at the moment!");
+                    }
 				} catch (Exception err) {
 					err.printStackTrace();
 				}
