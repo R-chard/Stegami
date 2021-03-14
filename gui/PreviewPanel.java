@@ -89,7 +89,7 @@ public class PreviewPanel extends JPanel {
     public void updateImage(BufferedImage image){
         removeAll();
         try{
-            if (image == null){
+            if (image == null) {
                 image = ImageIO.read(new File(DEFAULT_IMAGE_PATH));
             }
         } catch(Exception e){}

@@ -121,11 +121,10 @@ public class ResultPanel extends JPanel{
         prevButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
 				try{
-                    // TODO remove result img + encode img
-                    removeImage();
+                    
+                    ResultPanel.getInstance().removeImage();
 					AppMain.getInstance().toPanel(PanelName.MAIN);
                     
-
 				} catch (Exception err) {
 					err.printStackTrace();
 				}
