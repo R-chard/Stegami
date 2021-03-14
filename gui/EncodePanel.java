@@ -5,12 +5,15 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.awt.Font;
+
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JOptionPane;
 
 import Utils.ImageSteganography;
@@ -35,19 +38,40 @@ public class EncodePanel extends JPanel{
 		is = new ImageSteganography();
         this.setLayout(null);
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		setBackground(Color.BLACK);
         containPreviewPanel = new PreviewPanel(1); 
-		containPreviewPanel.setBounds(0, 0, 300, 350);
+		containPreviewPanel.setBounds(0, 0, 300, 300);
+		containPreviewPanel.updateImage(null);
+
+		JTextArea containerText = new JTextArea("Select Container Image");
+        containerText.setForeground(Color.WHITE);
+        containerText.setBackground(Color.BLACK);
+        containerText.setBounds(60, 300, 200, 50);
+		Font boldFontC=new Font(containerText.getFont().getName(), Font.BOLD, containerText.getFont().getSize()+5);
+        containerText.setFont(boldFontC);
+
 		secretPreviewPanel = new PreviewPanel(2);
-		secretPreviewPanel.setBounds(300, 0, 300, 350);
+		secretPreviewPanel.setBounds(300, 0, 300, 300);
+		secretPreviewPanel.updateImage(null);
+		
+		JTextArea secretText = new JTextArea("Select Image to Hide");
+        secretText.setForeground(Color.WHITE);
+        secretText.setBackground(Color.BLACK);
+        secretText.setBounds(370, 300, 200, 50);
+		Font boldFontS=new Font(secretText.getFont().getName(), Font.BOLD, secretText.getFont().getSize()+5);
+        secretText.setFont(boldFontS);
+
 		JPanel bottomPanel = createBottomPanel();
 		bottomPanel.setBounds(0,350,600,100);
+
 		add(containPreviewPanel);
+		add(containerText);
 		add(secretPreviewPanel);
+		add(secretText);
 		add(bottomPanel);
     }
 
 	public void getContainerImage(String path) {
-		System.out.println(path);
         try {
             container = ImageIO.read(new File(path));
             containPreviewPanel.updateImage(container);
@@ -56,7 +80,6 @@ public class EncodePanel extends JPanel{
     }
 
 	public void getSecretImage(String path) {
-		System.out.println(path);
         try {
             secret = ImageIO.read(new File(path));
 			secretPreviewPanel.updateImage(secret);
@@ -71,11 +94,11 @@ public class EncodePanel extends JPanel{
 		JButton prevButton = createPrevButton();
 		prevButton.setBounds(180,5,100,50);
 
-        JButton decodeButton = createEncodeButton();
-		decodeButton.setBounds(320,5,100,50);
+        JButton encodeButton = createEncodeButton();
+		encodeButton.setBounds(320,5,100,50);
         
 		bottomPanel.add(prevButton);
-        bottomPanel.add(decodeButton);
+        bottomPanel.add(encodeButton);
 		bottomPanel.setBackground(Color.BLACK);
         return bottomPanel;
     }
