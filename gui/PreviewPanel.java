@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
@@ -13,6 +15,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.imageio.ImageIO;
+
+import Utils.ImageUtils;
 
 // Reusable preview class
 @SuppressWarnings("serial")
@@ -34,7 +38,7 @@ public class PreviewPanel extends JPanel {
     };
 
     private JButton createButton(BufferedImage image){
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon(image).getImage());
+        ImageIcon imageIcon = new ImageIcon(image);
         JButton button = new JButton(imageIcon);
         button.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
@@ -80,7 +84,10 @@ public class PreviewPanel extends JPanel {
 
     public void updateImage(BufferedImage image){
         removeAll();
-        add(createButton(image));
+        int w = this.getWidth();
+        int h = this.getHeight();
+        BufferedImage resized = ImageUtils.resize(w, h, image);
+        add(createButton(resized));
         validate();
     }
     
