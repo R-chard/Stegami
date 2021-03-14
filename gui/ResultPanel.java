@@ -64,6 +64,7 @@ public class ResultPanel extends JPanel{
     public void updateImage(BufferedImage resultImg) {
         this.resultImg = resultImg;
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        imagePanel.removeAll();
         imagePanel.add(new JLabel(new ImageIcon(ImageUtils.resize(WIDTH, HEIGHT, resultImg))));
         validate();
     }
