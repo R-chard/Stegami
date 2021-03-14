@@ -1,6 +1,6 @@
 # Stegami 
 
-Stegami (A contraction of "steganography" and "images" spelt backwards ) is a Java desktop application that allows the user to hide a greyscale image into another without making any visible alterations to the carrier image. We came up with the idea of this project as we were curious if there was a digital equivalent of invisible ink, a method commonly used by spies in the past to communicate. Upon further research, we learnt about steganography and realised that there were not many projects that attempted to conceal one image in another despite its usefullness.
+Stegami (A contraction of "steganography" and "images" spelt backwards ) is a Java desktop application that allows the user to hide an image into another with minimal visible alterations to the carrier image. We came up with the idea of this project as we were curious if there was a digital equivalent of invisible ink, a method commonly used by spies in the past to communicate. Upon further research, we learnt about steganography and realised that there were not many projects that attempted to conceal one image in another despite its usefullness.
 
 ## Installation 📥
 
@@ -24,14 +24,14 @@ __Encoding__
 
 __Decoding__
 - Upload a png image that has been encoded previously
-- Click on the 'Decode' button to view the hidden greyscale image stored within it
+- Click on the 'Decode' button to view the hidden image stored within it
 - You can even store a copy by downloading the hidden image
 
 
 ## How it works 🔎
-Stegami applies a technique known as digital steganography. Our application firstly requests a carrier image from the user and another secret image to be concealed into the carrier image. The secret image is subsequently converted to greyscale. We then manipulated the 2 least significant bits of the red, green, blue and alpha value of every pixel of the carrier image, allowing us to store another up to 256 bits of data per pixel. This is sufficient to store a secret image of identical size since each pixel in a black and white image is represented by a numeric value between 0-255. 
+Stegami applies a technique known as digital steganography implemented with our unique algorithm. Our application firstly requests a carrier image from the user and another secret image to be concealed into the carrier image. We then retrieve the most significant 4 bits of the red, green, blue and alpha value of the secret image and store them into the least significant 4 bits of the carrier image. When we decode the encoded carrier image, the 4 bits stored are retrieved and used to reconstruct the secret image.
 
-The carrier image appears unaltered to the human eye even when placed side to side with the original copy. It is also often very similar in size to the original image.However, when decoded by another instance of our application, a greyscale version of the secret message is restored without a reduction in image quality.
+The changes in the quality of both images are minimal, since the most significant 4 bits account for 240 out of the 256 possible values (2^8 - 2^4). Changes in image quality and is often hard to spot unless placed side to side with the original image. It is also often very similar in size to the original image (slight fluctuations during to how lossless algorithms work). 
 
 > Note: Because of how our algorithm works, Stegami only supports image files that employ loseless compression techniques like PNG or BMP. Converting the file to JPEG, for instance, would ruin the secret image. This is a possible extension of the project that we might look further into.
 
