@@ -59,6 +59,8 @@ public class PreviewPanel extends JPanel {
                             EncodePanel.getInstance().getContainerImage(file.getPath());
                         } else if (identifier == 2){
                             EncodePanel.getInstance().getSecretImage(file.getPath());
+                        } else if (identifier == 3){
+                            ResultPanel.getInstance().getImage(file.getPath());
                         }
                         
 

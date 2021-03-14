@@ -27,7 +27,7 @@ public class AppMain extends JFrame {
         mainPanel = new MainPanel();
         encodePanel = EncodePanel.getInstance();
         decodePanel = DecodePanel.getInstance();
-        resultPanel = new ResultPanel();
+        resultPanel = ResultPanel.getInstance();
 
         contentPanel.add(PanelName.MAIN.getName(), mainPanel);
         contentPanel.add(PanelName.ENCODE.getName(), encodePanel);

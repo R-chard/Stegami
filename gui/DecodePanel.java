@@ -103,7 +103,6 @@ public class DecodePanel extends JPanel{
             public void actionPerformed(ActionEvent e) {
 				try{
 					AppMain.getInstance().toPanel(PanelName.MAIN);
-
 				} catch (Exception err) {
 					err.printStackTrace();
 				}
