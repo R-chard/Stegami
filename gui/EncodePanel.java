@@ -117,7 +117,9 @@ public class EncodePanel extends JPanel{
 					return;
                 }
 				try{
-					is.encode(container, secret);
+					if (MainPanel.getInstance().is_grayscale()) is.encode_grayscale(container, secret);
+					else is.encode_color(container, secret);
+
 					ResultPanel.getInstance().updateImage(container);
 					AppMain.getInstance().toPanel(PanelName.PREVIEW);
 

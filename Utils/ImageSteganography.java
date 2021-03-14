@@ -98,7 +98,7 @@ public class ImageSteganography {
         }
     }
 
-    public void encode(BufferedImage container, BufferedImage secret) throws SteganographyException {
+    public void encode_color(BufferedImage container, BufferedImage secret) throws SteganographyException {
         
         
         int container_w = container.getWidth();
@@ -144,7 +144,7 @@ public class ImageSteganography {
         return secret;
     }
 
-    public BufferedImage decode(BufferedImage container) {
+    public BufferedImage decode_color(BufferedImage container) {
         int w = container.getWidth();
         int h = container.getHeight();
         

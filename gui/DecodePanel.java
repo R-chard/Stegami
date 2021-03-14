@@ -93,7 +93,9 @@ public class DecodePanel extends JPanel{
                     return;
                 }
                 try{
-					secret = is.decode(selectedImg);
+                    if (MainPanel.getInstance().is_grayscale()) secret = is.decode_grayscale(selectedImg);
+                    else secret = is.decode_color(selectedImg);
+                    
 					ResultPanel.getInstance().updateImage(secret);
 					AppMain.getInstance().toPanel(PanelName.PREVIEW);
 				} catch (Exception err) {

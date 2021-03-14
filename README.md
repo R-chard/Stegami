@@ -49,7 +49,4 @@ Stegami was built during the Stacshack 007 Hackathon ran by the University of St
 
 ## Executable files
 
-We also provide two executable file for two version of our application. The product required JDK.
-
-* **stegami.exe** - is our first products that will encode a grayscale image with very high quality and small changes to originals files.
-* **stegami-2.0.exe** - provide a way to encode a coloured image, however, the trade back is larger changes (+/- 16 in rgba values) in the original files.
+We also provide windows executable file for our application. The product required JRE.
