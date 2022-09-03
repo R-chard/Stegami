@@ -28,9 +28,9 @@ __Decoding__
 
 
 ## How it works 🔎
-Stegami applies a technique known as digital steganography implemented with our unique algorithm. Our application firstly requests a carrier image from the user and another secret image to be concealed into the carrier image. We then retrieve the most significant 4 bits of the red, green, blue and alpha value of the secret image and store them into the least significant 4 bits of the carrier image. When we decode the encoded carrier image, the 4 bits stored are retrieved and used to reconstruct the secret image.
+Stegami applies a technique known as digital steganography implemented with our unique algorithm. Our application firstly requests a carrier image from the user and another secret image to be concealed into the carrier image. We then retrieve the most significant 4 bits of the red, green, blue and alpha value of the secret image and store them into the least significant 4 bits of the carrier image. When we decode the encoded carrier image, the 4 bits stored are retrieved and used to reconstruct the secret image. 
 
-The changes in the quality of both images are minimal, since the most significant 4 bits account for 240 out of the 256 possible values (2^8 - 2^4). Changes in image quality and is often hard to spot unless placed side to side with the original image. It is also often very similar in size to the original image (slight fluctuations during to how lossless algorithms work). 
+The changes in the quality of both images are minimal, since the most significant 4 bits account for 240 out of the 256 possible values (2^8 - 2^4). Fruthermore, we set the least significant 4 bits to its median value. Assuming the last 4 bits has an equal probability of being every value. This leads to an average 8/128 (6.3%) reduction in image quality. Changes in image quality and is often hard to spot unless placed side to side with the original image. It is also often very similar in size to the original image (slight fluctuations during to how lossless algorithms work). 
 
 > Note: Because of how our algorithm works, Stegami only supports image files that employ loseless compression techniques like PNG or BMP. Converting the file to JPEG, for instance, would ruin the secret image. This is a possible extension of the project that we might look further into.
 
